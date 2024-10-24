@@ -1,0 +1,46 @@
+body {
+	width: 180px;
+}
+
+#changeColor {
+  height: 30px;
+  width: 30px;
+  outline: none;
+  margin: 10px;
+  border: none;
+  border-radius: 2px;
+}
+
+#changeColor.current {
+  box-shadow: 0 0 0 2px white,
+              0 0 0 4px black;
+}
+
+.color {
+	width: 55px; height:25px;
+	border: none;
+	cursor: pointer;
+}
+.custom {
+  width: 55px; height:25px;
+  border: none;
+  cursor: pointer;
+	font-size: 12px;
+}
+
+#list {
+  list-style-type:none;
+  padding-left: 0;
+}
+
+.item {
+  width: 170px;
+  cursor: pointer;
+  overflow: hidden;
+white-space: nowrap;
+}
+
+.selected {
+  color: white;
+  background-color: gray; 
+}

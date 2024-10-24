@@ -1,0 +1,396 @@
+<!-- <!DOCTYPE html>
+<html>
+  <body>
+    <video width="400" controls>
+      <source src="download.mp4" type="video/mp4" />
+      <audio controls>
+        <source src="download.mp3" type="audio/mpeg" />
+      </audio>
+      Your browser does not support HTML video.
+    </video>
+
+    <p>
+      Video courtesy of
+      <a href="https://www.bigbuckbunny.org/" target="_blank">Big Buck Bunny</a
+      >.
+    </p>
+  </body>
+</html> -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://releases.transloadit.com/uppy/robodog/v2.8.0/robodog.min.css"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://releases.transloadit.com/uppy/robodog/v2.8.0/robodog.min.js"></script>
+    <button id="browse">Select Files</button>
+    <script>
+      document.getElementById("browse").addEventListener("click", function () {
+        var uppy = window.Robodog.pick({
+          providers: [
+            "instagram",
+            "url",
+            "webcam",
+            "dropbox",
+            "google-drive",
+            "facebook",
+            "onedrive",
+          ],
+          waitForEncoding: true,
+          params: {
+            // To avoid tampering, use Signature Authentication
+            auth: { key: "YOUR_TRANSLOADIT_KEY" },
+            // To hide your `steps`, use a `template_id` instead
+            steps: {
+              ":original": {
+                robot: "/upload/handle",
+              },
+              imported_video: {
+                robot: "/http/import",
+                url: "https://demos.transloadit.com/inputs/big-buck-bunny-10s.mp4",
+              },
+              replaced_audio_track: {
+                use: [
+                  { name: ":original", as: "audio" },
+                  { name: "imported_video", as: "video" },
+                ],
+                robot: "/video/merge",
+                result: true,
+                ffmpeg_stack: "v4.3.1",
+                preset: "iphone-high",
+              },
+              exported: {
+                use: ["imported_video", "replaced_audio_track", ":original"],
+                robot: "/s3/store",
+                credentials: "YOUR_AWS_CREDENTIALS",
+                url_prefix: "https://demos.transloadit.com/",
+              },
+            },
+          },
+        })
+          .then(function (bundle) {
+            // Due to `waitForEncoding: true` this is fired after encoding is done.
+            // Alternatively, set `waitForEncoding` to `false` and provide a `notify_url`
+            // for Async Mode where your back-end receives the encoding results
+            // so that your user can be on their way as soon as the upload completes.
+            console.log(bundle.transloadit); // Array of Assembly Statuses
+            console.log(bundle.results); // Array of all encoding results
+          })
+          .catch(console.error);
+      });
+    </script>
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <video controls loop style="width: 100vw; height: 100vh">
+      <source
+        src="file:///D://Task/2022_07_21/video_extension/Big_Buck_Bunny_Trailer.webm"
+        type="video/webm"
+      />
+      <source
+        src="file:///D://Task/2022_07_21/video_extension/Big_Buck_Bunny_Trailer.webm"
+        type="video/webm"
+      />
+    </video>
+    <script>
+      document.addEventListener("keydown", function (event) {
+        event.keyCode;
+      });
+      chrome.developerPrivate.openDevTools();
+    </script>
+  </body>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <video id="videov" controls>
+      <source src="https://webrtc.github.io/samples/src/video/chrome.webm"></source>
+    </video>
+    <audio id="audiov" controls>
+      <source src="https://demos.transloadit.com/9e/88f9596be04328a83552d9fbaa99a3/joakim_karud-rock_angel.mp3" type="audio/mpeg">
+    </audio>
+    <button onclick="mergeVideo()">Merge</button>
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js"></script>
+    <script>
+      // console.log();
+      
+      async function mergeVideo() {
+        // var videotag = document.getElementById("videov");
+        // var audiotag = document.getElementById("audiov");
+        var videotag = "https://webrtc.github.io/samples/src/video/chrome.webm";
+        var audiotag = "https://demos.transloadit.com/9e/88f9596be04328a83552d9fbaa99a3/joakim_karud-rock_angel.mp3";
+        let { createFFmpeg, fetchFile } = FFmpeg;
+        let ffmpeg = createFFmpeg();
+        await ffmpeg.load();
+        ffmpeg.FS("writeFile", "video.mp4", await fetchFile(videotag));
+        ffmpeg.FS("writeFile", "audio.mp4", await fetchFile(audiotag));
+        await ffmpeg.run(
+          "-i",
+          "video.mp4",
+          "-i",
+          "audio.mp4",
+          "-c",
+          "copy",
+          "output.mp4"
+        );
+        let data = await ffmpeg.FS("readFile", "output.mp4");
+        return new Uint8Array(data.buffer);
+      }
+    </script>
+  </body>
+</html> -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <audio controls play>
+      <source src="./download.mp3"></source>
+    </audio>
+    <script>
+      function LOAD() {
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        // setup media recording
+        const recordedChunks = [];
+        const stream = canvas.captureStream(60);
+
+        // let combined = new MediaStream([...videoStream.getTracks(), ...audioStream.getTracks()]);
+        let options = {
+          audio: true,
+          audioBitsPerSecond: 64000,
+        };
+
+        const audioContext = new AudioContext();
+        const oscillator = audioContext.createOscillator();
+        oscillator.frequency.value = 0;
+        const streamAudioDestination =
+          audioContext.createMediaStreamDestination();
+        oscillator.connect(streamAudioDestination);
+        oscillator.start();
+
+        // add audio track
+        const audioStream = streamAudioDestination.stream;
+        const audioTracks = audioStream.getAudioTracks();
+        const firstAudioTrack = audioTracks[0];
+        stream.addTrack(firstAudioTrack);
+
+        mediaRecorder = new MediaRecorder(stream, options);
+        mediaRecorder.ondataavailable = (e) => recordedChunks.push(e.data);
+        mediaRecorder.onstop = async (e) => {
+          const download = (fileName, url) => {
+            const a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: block";
+            a.innerHTML = "LINK";
+            a.href = url;
+            a.download = fileName;
+            a.click();
+
+            window.URL.revokeObjectURL(url);
+          };
+
+          // download video
+          const videoData = new Blob(recordedChunks, { type: "video/mp4" });
+          download("1.mp4", URL.createObjectURL(videoData));
+        };
+
+        // start recording
+        mediaRecorder.start();
+
+        // do some canvas related operations
+        var x = 10;
+        setInterval(function () {
+          x += 20;
+          ctx.fillStyle = "red";
+          ctx.fillText("TEST TEST", x, 50, 200, 50);
+        }, 1000);
+        ctx.fillText("TEST TEST", 10, 50, 200, 50);
+
+        setTimeout(function () {
+          mediaRecorder.stop();
+        }, 10000);
+      }
+
+      function attachFunction() {
+        LOAD();
+        window.removeEventListener("click", attachFunction);
+      }
+
+      window.addEventListener("click", attachFunction);
+    </script>
+  </body>
+</html> -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="500" height="200"></canvas>
+    <button id="rec" disabled>record</button>
+    <script>
+      var cStream,
+        aStream,
+        vid,
+        recorder,
+        analyser,
+        dataArray,
+        bufferLength,
+        chunks = [];
+      var rec = document.getElementById("rec");
+
+      function clickHandler() {
+        this.textContent = "stop recording";
+        cStream = canvas.captureStream(30);
+        cStream.addTrack(aStream.getAudioTracks()[0]);
+
+        recorder = new MediaRecorder(cStream);
+        recorder.start();
+
+        recorder.ondataavailable = saveChunks;
+
+        recorder.onstop = exportStream;
+
+        this.onclick = stopRecording;
+      }
+
+      function exportStream(e) {
+        if (chunks.length) {
+          var blob = new Blob(chunks);
+          var vidURL = URL.createObjectURL(blob);
+          var vid = document.createElement("video");
+          vid.controls = true;
+          vid.src = vidURL;
+          vid.onend = function () {
+            URL.revokeObjectURL(vidURL);
+          };
+          document.body.insertBefore(vid, canvas);
+        } else {
+          document.body.insertBefore(
+            document.createTextNode("no data saved"),
+            canvas
+          );
+        }
+      }
+
+      function saveChunks(e) {
+        e.data.size && chunks.push(e.data);
+      }
+
+      function stopRecording() {
+        vid.pause();
+        this.parentNode.removeChild(this);
+        recorder.stop();
+      }
+
+      function initAudioStream(evt) {
+        var audioCtx = new AudioContext();
+        // create a stream from our AudioContext
+        var dest = audioCtx.createMediaStreamDestination();
+        aStream = dest.stream;
+        // connect our video element's output to the stream
+        var sourceNode = audioCtx.createMediaElementSource(this);
+        sourceNode.connect(dest);
+        // start the video
+        evt.target.play();
+
+        // just for the fancy canvas drawings
+        analyser = audioCtx.createAnalyser();
+        sourceNode.connect(analyser);
+
+        analyser.fftSize = 2048;
+        bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        analyser.getByteTimeDomainData(dataArray);
+
+        // output to our headphones
+        sourceNode.connect(audioCtx.destination);
+
+        startCanvasAnim();
+
+        rec.onclick = clickHandler;
+        rec.disabled = false;
+      }
+
+      var loadVideo = async function () {
+        vid = await document.createElement("video");
+        // vid.crossOrigin = "anonymous";
+        // vid.muted = await "muted";
+        vid.src = await "https://www.w3schools.com/css/mov_bbb.mp4";
+        vid.oncanplay = await initAudioStream;
+      };
+
+      function startCanvasAnim() {
+        alert("start");
+        // from MDN https://developer.mozilla.org/en/docs/Web/API/AnalyserNode#Examples
+        var canvasCtx = canvas.getContext("2d");
+
+        canvasCtx.fillStyle = "rgb(200, 200, 200)";
+        canvasCtx.lineWidth = 2;
+        canvasCtx.strokeStyle = "rgb(0, 0, 0)";
+
+        var draw = function () {
+          var drawVisual = requestAnimationFrame(draw);
+
+          analyser.getByteTimeDomainData(dataArray);
+
+          canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+          canvasCtx.beginPath();
+
+          var sliceWidth = (canvas.width * 1.0) / bufferLength;
+          var x = 0;
+
+          for (var i = 0; i < bufferLength; i++) {
+            var v = dataArray[i] / 128.0;
+            var y = (v * canvas.height) / 2;
+
+            if (i === 0) {
+              canvasCtx.moveTo(x, y);
+            } else {
+              canvasCtx.lineTo(x, y);
+            }
+
+            x += sliceWidth;
+          }
+
+          canvasCtx.lineTo(canvas.width, canvas.height / 2);
+          canvasCtx.stroke();
+        };
+
+        draw();
+      }
+
+      loadVideo();
+    </script>
+  </body>
+</html> -->

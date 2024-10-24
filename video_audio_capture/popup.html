@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="popup.css">
+		<script src="lib/jquery.js"></script>
+		<script src="lib/color-picker.js"></script>
+	</head>
+	<body id="body">
+		<div id="tabsPanel">
+			<!-- <div id="tabSelected" class="tabSelected"></div> -->
+			<div id="tabVideoSel" class="tabVideoSel"></div>
+			<div id="tabAudioSel" class="tabAudioSel"></div>
+			<div id="tabTextSel" class="tabTextSel"></div>
+			<div id="tabVideo" class="tabText">VIDEO</div>
+			<div id="tabAudio" class="tabText">AUDIO</div>
+			<div id="tabText" class="tabText">TEXT</div>
+		</div>
+
+		<div id="bgPanel">
+		</div>
+
+		<div id="articlePanel">
+			<div id="header-info">
+				<ul>
+					<li><label id="lbl-username"></label></li>
+					<li><label>Title:</label><input id="title" type="text" class="header" placeholder="Add title manually"></li>
+					<li>
+						<!-- <label id="lbl-date">Date:</label> -->
+						<input id="date" type="datetime-local" class="header">
+					</li>
+					<li style="height: 100px;">
+						<label>Description:</label>
+						<br><br>
+						<textarea id="description" class="header" cols="30" rows="10" maxlength='250'></textarea>
+					</li>
+				</ul>
+			</div>
+			<button id="btnAdd" class="button disabled" style="width: 110px; margin-left: 10px;">Add</button>
+			<input id="percent" class="button" type="number" value="0"></input>
+			<span style="color: white !important; vertical-align: middle; margin-left: -2px;">%</span>
+			<input id="color" type="color" style="margin-left: 10px;" value="#F1C40F" onchange="SaveColor()">
+
+			<br>
+			<input id="quality" class="button" type="number" value="90" style="color: white !important;">&nbsp;%</input>
+			<label style="color: white; margin-left: 10px;">Static capture:</label>
+			<input id="static" type="checkbox">
+			<button id="btnCapture" class="button" style="width: 105px; margin-left: 10px;">📸 Capture</button>
+			<br>
+			<lbl id="lblSelections">- Selections -</lbl>
+			<lbl id="lblSelectionsNone">No selections added yet</lbl>
+			<ul id="selections"></ul>
+			<button id="btnConnect" class="button disabled">Connect</button>
+			<button id="btnConnections" class="button">See connections</button>
+			<!-- footer -->
+			<br>
+			<button id="btnHomepage" class="button">Homepage</button>
+			<button id="btnSaveArticle" class="button">Check Article Later</button>
+			<button id="btnLogout" class="button">Logout</button>
+			<div id="connectionsPanel" style="display: none;">
+				<ul id="connections">
+					<li>
+						<div class="connectionPanel">
+							<span class="removeSelection">X</span>
+							<p class="title">Connection 1</p>
+							<p>Selection 1</p>
+							<p>Selection 2</p>
+						</div>
+					</li>
+				</ul>
+				<button id="btnBack" class="button">Back</button>
+			</div>
+			<div id="capturing">
+				<label id="lblCapturing">&nbsp;Capturing...</label>
+				<img id="record-animation1" class="record-animation" src="images/recording.png">
+				<button id="btnCancel" class="button">Cancel</button>
+			</div>
+		</div>
+
+		<div id="videoPanel">
+			<!-- <div>
+				<video
+					controls="true"
+					style="display: none"
+					id="videoResult"
+					src=""
+				></video>
+			</div>
+			<div style="text-align: center">
+				<button id="video_startBtn">Start recording</button>
+				<div id="video_record_load" style="display: none;"><img src="./images/loading.gif" />recording . . .</div>
+				<button id="video_stopBtn" style="display: none">
+					Stop recording
+				</button>
+				<a href="#" id="downloadbtn" style="display: none"
+					><button class="videobtndown">Download Video</button></a
+				>
+			</div> -->
+			<div style="display: flex; flex-direction: column;align-items: center;">
+				<div class="container">
+					<video id="videoElement" autoplay onplay="resize_canvas(this)"></video>
+					<canvas class="canvas" id="cv1"></canvas>
+				</div>
+				<div id="result_div">
+					<button id="video_startBtn">Share Video</button>
+					<button id="record_startBtn">Start recording</button>
+					<div id="video_record_load" style="display: none;">
+						<img src="./images/loading.gif" />
+						<span>recording . . .</span>
+						<button id="video_stopBtn">
+						Stop recording
+					</button>
+				</div>
+				</div>
+				<div class="result_img_div"><img id="croppedImg" width="200px" /></div>
+				<div id="helloresult"></div>
+			</div>
+		</div>
+
+		<div id="audioPanel">
+			<br><br>
+			<img id="record-animation2" class="record-animation" src="images/recording.png">
+			<br>
+			<label id="lblRecordTime">00:00:00</label>
+			<br>
+			<button id="btnRecord" class="btnMedia"><img src="images/record.png"></button>
+			<button id="btnPause" class="btnMedia disabled"><img src="images/pause.png"></button>
+			<button id="btnStop" class="btnMedia disabled"><img src="images/stop.png"></button>
+			<br><br>
+			<textarea id="txtAudioDescription" type="text" placeholder="Description..."></textarea>
+			<br>
+			<select id="slcRecordings" multiple></select>
+			<br>
+			<audio controls></audio>
+			<br>
+			<button id="btnUploadAudio" class="disabled">Save</button>
+		</div>
+
+		<div id="login">
+			<br>
+			<p>Username:</p>
+			<input type="text" id="txtUser" value="usr">
+			<p>Password:</p>
+			<input type="password" id="txtPassword" value="789">
+			<button id="btnLogin">Log in</button>
+		</div>
+		<!-- <script src="home.js"></script> -->
+		
+		<script src="popup.js"></script>
+		
+		<script src="cap_video.js"></script>
+	</body>
+</html>
